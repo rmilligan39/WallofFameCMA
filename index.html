@@ -116,31 +116,7 @@ html, body {
 .ctrl-btn svg { width: 1.5vw; height: 1.5vw; }
 .ctrl-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
 
-/* ── FILTER BAR ── */
-#filter-bar {
-  display: -webkit-box; display: -webkit-flex; display: flex;
-  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
-  -webkit-flex-wrap: wrap; flex-wrap: wrap;
-  gap: 0.8vw;
-  padding-bottom: 1.2vw;
-  border-top: 1px solid rgba(191,160,106,0.15);
-  padding-top: 0.9vw;
-}
 
-.filter-label {
-  font-size: 0.85vw; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--muted); margin-right: 0.3vw; white-space: nowrap;
-}
-
-.filter-chip {
-  background: none; border: 1px solid rgba(191,160,106,0.2);
-  color: var(--muted); padding: 0.45vw 1.4vw;
-  font-family: var(--sans); font-size: 0.85vw; letter-spacing: 0.15em;
-  text-transform: uppercase; cursor: pointer; white-space: nowrap;
-  -webkit-transition: all 0.25s; transition: all 0.25s;
-}
-.filter-chip:hover  { border-color: var(--gold-dim); color: var(--cream); }
-.filter-chip.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
 
 /* ── STAGE — full viewport ── */
 #stage {
@@ -365,21 +341,7 @@ html, body {
   font-size: 3vw;
 }
 
-/* ── SWITCHING ── */
-#switching-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;
-  background: var(--bg);
-  display: -webkit-box; display: -webkit-flex; display: flex;
-  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
-  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  -webkit-transition: opacity 0.4s ease; transition: opacity 0.4s ease;
-}
-#switching-overlay.visible { opacity: 1; pointer-events: all; }
-.switching-text {
-  font-family: var(--serif); font-style: italic; font-size: 2.5vw;
-  color: var(--gold); letter-spacing: 0.1em;
-}
+
 </style>
 </head>
 <body>
@@ -423,17 +385,7 @@ html, body {
     </div>
   </div>
 
-  <div id="filter-bar">
-    <span class="filter-label">Filter</span>
-    <button class="filter-chip active" data-dept=""                                 onclick="setFilter(this)">All</button>
-    <button class="filter-chip"        data-dept="Paintings"                        onclick="setFilter(this)">Paintings</button>
-    <button class="filter-chip"        data-dept="Drawings"                         onclick="setFilter(this)">Drawings</button>
-    <button class="filter-chip"        data-dept="Prints"                           onclick="setFilter(this)">Prints</button>
-    <button class="filter-chip"        data-dept="Decorative Art and Design"        onclick="setFilter(this)">Decorative Arts</button>
-    <button class="filter-chip"        data-dept="Photographs"                      onclick="setFilter(this)">Photography</button>
-    <button class="filter-chip"        data-dept="Textiles"                         onclick="setFilter(this)">Textiles</button>
-    <button class="filter-chip"        data-dept="Egyptian and Ancient Near Eastern Art" onclick="setFilter(this)">Ancient</button>
-  </div>
+
 </div>
 
 <!-- STAGE -->
@@ -443,13 +395,12 @@ html, body {
 <div id="next-btn" onclick="nextSlide()">Next Work &rsaquo;</div>
 <a id="cma-link" href="#" target="_blank">View on CMA &rarr;</a>
 <div id="pause-overlay"><div class="pause-icon">&#9646;&#9646;</div></div>
-<div id="switching-overlay"><div class="switching-text">Changing collection&hellip;</div></div>
 
 <script>
 // ─────────────────────────────────────────────────────────────
 // Config — edit DURATION here (seconds)
 // ─────────────────────────────────────────────────────────────
-var DURATION = 120;
+var DURATION = 30;
 var API      = 'https://openaccess-api.clevelandart.org/api/artworks/';
 
 // SVG clock: viewBox 0 0 100 100, r=46
@@ -465,7 +416,6 @@ var isPaused    = false;
 var secondsLeft = DURATION;
 var timerID     = null;
 var preloading  = false;
-var activeDept  = '';
 
 // ─────────────────────────────────────────────────────────────
 // Utilities
@@ -534,7 +484,6 @@ function fetchRandomWork(attempt) {
 
   var skip = Math.floor(Math.random() * 48000);
   var url  = API + '?has_image=1&limit=1&skip=' + skip;
-  if (activeDept) url += '&department=' + encodeURIComponent(activeDept);
 
   return xhrGet(url)
     .then(function(data) {
@@ -604,13 +553,10 @@ function showSlide(idx) {
 function preloadAhead() {
   if (preloading) return;
   preloading = true;
-  var cap = activeDept;
   function loop() {
-    if (cap !== activeDept)          { preloading = false; return; }
     if (slides.length > currentIdx + 2) { preloading = false; return; }
     fetchRandomWork()
       .then(function(data) {
-        if (cap !== activeDept) { preloading = false; return; }
         var s = buildSlide(data);
         slides.push(s);
         document.getElementById('stage').appendChild(s);
@@ -638,39 +584,7 @@ function nextSlide() {
     .catch(function(e) { console.error('nextSlide failed', e); });
 }
 
-// ─────────────────────────────────────────────────────────────
-// Filter
-// ─────────────────────────────────────────────────────────────
-function setFilter(el) {
-  var newDept = el.getAttribute('data-dept');
-  if (newDept === activeDept) return;
-  var chips = document.querySelectorAll('.filter-chip');
-  for (var i = 0; i < chips.length; i++) chips[i].classList.remove('active');
-  el.classList.add('active');
-  activeDept = newDept;
 
-  var ov = document.getElementById('switching-overlay');
-  ov.classList.add('visible');
-  preloading = false;
-  for (var j = 0; j < slides.length; j++) slides[j].remove();
-  slides = []; currentIdx = -1;
-  clearInterval(timerID);
-
-  fetchRandomWork()
-    .then(function(f) {
-      return fetchRandomWork().then(function(s) { return { first:f, second:s }; });
-    })
-    .then(function(b) {
-      var stage = document.getElementById('stage');
-      var s1 = buildSlide(b.first);
-      var s2 = buildSlide(b.second);
-      slides.push(s1, s2);
-      stage.appendChild(s1); stage.appendChild(s2);
-      ov.classList.remove('visible');
-      showSlide(0); startTimer();
-    })
-    .catch(function() { ov.classList.remove('visible'); });
-}
 
 // ─────────────────────────────────────────────────────────────
 // Clock
