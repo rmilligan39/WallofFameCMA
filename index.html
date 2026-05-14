@@ -2,509 +2,695 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Collection — Cleveland Museum of Art</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=2160, initial-scale=1.0">
+<meta http-equiv="autoplay" content="true">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Cleveland Museum of Art — Open Collection</title>
 <style>
-  :root {
-    --bg: #0c0c0b;
-    --gold: #BFA06A;
-    --gold-dim: rgba(191,160,106,0.4);
-    --cream: #EDE8DF;
-    --muted: rgba(237,232,223,0.4);
-    --subtle: rgba(237,232,223,0.12);
-    --font-serif: 'EB Garamond', Georgia, serif;
-    --font-sans: 'Outfit', sans-serif;
-  }
+/*
+  All sizing uses vw/vh units so this renders correctly
+  in both browser preview and on BrightSign 2160×4096 portrait.
+  Font sizes are vw-based so they scale with the viewport width.
+*/
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
+:root {
+  --bg:       #0c0c0b;
+  --gold:     #BFA06A;
+  --gold-dim: rgba(191,160,106,0.4);
+  --cream:    #F0E8D5;
+  --muted:    rgba(240,232,213,0.4);
+  --subtle:   rgba(240,232,213,0.09);
+  --serif:    Georgia, "Times New Roman", serif;
+  --sans:     "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
-  body {
-    background: var(--bg);
-    color: var(--cream);
-    font-family: var(--font-sans);
-    font-weight: 300;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-    user-select: none;
-  }
+*, *::before, *::after {
+  -webkit-box-sizing: border-box; box-sizing: border-box;
+  margin: 0; padding: 0;
+}
 
-  /* ── HEADER ── */
-  header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.4rem 2.5rem;
-    background: linear-gradient(to bottom, rgba(12,12,11,0.92) 0%, transparent 100%);
-  }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--sans);
+  -webkit-user-select: none; user-select: none;
+}
 
-  .logo {
-    font-family: var(--font-serif);
-    font-size: 0.95rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .logo sub {
-    display: block;
-    font-family: var(--font-sans);
-    font-size: 0.58rem;
-    letter-spacing: 0.35em;
-    color: var(--muted);
-    font-style: normal;
-    margin-top: 3px;
-    font-weight: 300;
-  }
+/* ── HEADER ── */
+#header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  padding: 1.5vw 3.5vw 0;
+  background: -webkit-linear-gradient(top, rgba(12,12,11,0.97) 65%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(12,12,11,0.97) 65%, transparent 100%);
+}
 
-  .header-right { display: flex; align-items: center; gap: 1.5rem; }
+.header-top {
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: justify; -webkit-justify-content: space-between; justify-content: space-between;
+  margin-bottom: 1.2vw;
+}
 
-  .clock-wrap { position: relative; width: 44px; height: 44px; }
-  .clock-svg { width: 44px; height: 44px; transform: rotate(-90deg); }
-  .clock-track { fill: none; stroke: var(--subtle); stroke-width: 1.5; }
-  .clock-fill {
-    fill: none; stroke: var(--gold); stroke-width: 1.5; stroke-linecap: round;
-    stroke-dasharray: 119.38;
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1s linear;
-  }
-  .clock-text {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.6rem; font-weight: 300; color: var(--gold); letter-spacing: 0.05em;
-  }
+.logo {
+  font-family: var(--serif);
+  font-size: 1.9vw;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1.3;
+}
+.logo-sub {
+  display: block;
+  font-family: var(--sans); font-style: normal;
+  font-size: 0.9vw; letter-spacing: 0.32em;
+  color: var(--muted); text-transform: uppercase;
+  margin-top: 0.3vw;
+}
 
-  .ctrl-btn {
-    background: none; border: 1px solid var(--subtle);
-    color: var(--muted); width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.25s; border-radius: 50%;
-  }
-  .ctrl-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+.header-right {
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  gap: 1.4vw;
+}
 
-  /* ── STAGE ── */
-  #stage {
-    flex: 1; position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
+/* ── CLOCK — sized in vw so it scales with viewport ── */
+.clock-wrap {
+  position: relative;
+  width: 5.5vw; height: 5.5vw;
+}
+.clock-svg {
+  width: 5.5vw; height: 5.5vw;
+  -webkit-transform: rotate(-90deg); transform: rotate(-90deg);
+}
+.clock-track { fill: none; stroke: var(--subtle); stroke-width: 2; }
+.clock-fill {
+  fill: none; stroke: var(--gold); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 100; /* normalised — JS uses 0–100 offset */
+  stroke-dashoffset: 0;
+  -webkit-transition: stroke-dashoffset 1s linear; transition: stroke-dashoffset 1s linear;
+}
+.clock-text {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  font-size: 0.95vw; color: var(--gold); letter-spacing: 0.04em;
+}
 
-  .slide {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 1.2s ease;
-  }
-  .slide.active { opacity: 1; }
+.ctrl-btn {
+  background: none; border: 1px solid var(--subtle);
+  color: var(--muted);
+  width: 4vw; height: 4vw;
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  cursor: pointer;
+  -webkit-border-radius: 50%; border-radius: 50%;
+  -webkit-transition: all 0.25s; transition: all 0.25s;
+}
+.ctrl-btn svg { width: 1.5vw; height: 1.5vw; }
+.ctrl-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
 
-  .slide-img-wrap {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: #0a0a09;
-  }
-  .slide-img-wrap img {
-    max-width: 100%; max-height: 100%;
-    width: auto; height: auto;
-    object-fit: contain; display: block;
-  }
+/* ── FILTER BAR ── */
+#filter-bar {
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-flex-wrap: wrap; flex-wrap: wrap;
+  gap: 0.8vw;
+  padding-bottom: 1.2vw;
+  border-top: 1px solid rgba(191,160,106,0.15);
+  padding-top: 0.9vw;
+}
 
-  .slide-vignette {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 45%, rgba(12,12,11,0.6) 100%);
-    pointer-events: none;
-  }
-  .slide-gradient {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
-    background: linear-gradient(to top, rgba(12,12,11,0.97) 0%, rgba(12,12,11,0.65) 40%, transparent 100%);
-    pointer-events: none;
-  }
+.filter-label {
+  font-size: 0.85vw; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--muted); margin-right: 0.3vw; white-space: nowrap;
+}
 
-  /* ── DESCRIPTION ── */
-  .slide-desc {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 2.5rem 5rem 2.5rem;
-    text-align: center; z-index: 10;
-  }
+.filter-chip {
+  background: none; border: 1px solid rgba(191,160,106,0.2);
+  color: var(--muted); padding: 0.45vw 1.4vw;
+  font-family: var(--sans); font-size: 0.85vw; letter-spacing: 0.15em;
+  text-transform: uppercase; cursor: pointer; white-space: nowrap;
+  -webkit-transition: all 0.25s; transition: all 0.25s;
+}
+.filter-chip:hover  { border-color: var(--gold-dim); color: var(--cream); }
+.filter-chip.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
 
-  .desc-dept {
-    font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 0.6rem;
-    opacity: 0; transform: translateY(8px);
-    transition: opacity 0.6s 0.3s ease, transform 0.6s 0.3s ease;
-  }
-  .desc-title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 3vw, 2.8rem); font-weight: 400; line-height: 1.2;
-    margin-bottom: 0.4rem; color: var(--cream);
-    opacity: 0; transform: translateY(10px);
-    transition: opacity 0.65s 0.45s ease, transform 0.65s 0.45s ease;
-  }
-  .desc-artist {
-    font-family: var(--font-serif); font-style: italic;
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem); color: var(--gold); margin-bottom: 0.5rem;
-    opacity: 0; transform: translateY(8px);
-    transition: opacity 0.6s 0.55s ease, transform 0.6s 0.55s ease;
-  }
-  .desc-meta {
-    font-size: 0.7rem; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.75rem;
-    opacity: 0; transform: translateY(6px);
-    transition: opacity 0.6s 0.65s ease, transform 0.6s 0.65s ease;
-  }
-  .desc-text {
-    max-width: 640px; margin: 0 auto;
-    font-family: var(--font-serif);
-    font-size: clamp(0.85rem, 1.2vw, 1rem); line-height: 1.75;
-    color: rgba(237,232,223,0.6);
-    opacity: 0; transform: translateY(6px);
-    transition: opacity 0.6s 0.75s ease, transform 0.6s 0.75s ease;
-  }
+/* ── STAGE — full viewport ── */
+#stage {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
 
-  .slide.active .desc-dept,
-  .slide.active .desc-title,
-  .slide.active .desc-artist,
-  .slide.active .desc-meta,
-  .slide.active .desc-text { opacity: 1; transform: translateY(0); }
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  opacity: 0;
+  -webkit-transition: opacity 1.4s ease; transition: opacity 1.4s ease;
+}
+.slide.active { opacity: 1; }
 
-  /* ── PROGRESS BAR ── */
-  #progress-bar {
-    position: fixed; bottom: 0; left: 0;
-    height: 2px; background: var(--gold);
-    width: 100%; transform-origin: left; transform: scaleX(1);
-  }
+.slide-img-wrap {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  background: #080807;
+}
+.slide-img-wrap img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  display: block; object-fit: contain;
+}
 
-  /* ── LOADING SCREEN ── */
-  #loading-screen {
-    position: fixed; inset: 0; z-index: 200;
-    background: var(--bg);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 1.5rem;
-    transition: opacity 0.8s ease;
-  }
-  #loading-screen.fade-out { opacity: 0; pointer-events: none; }
+.slide-vignette {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: -webkit-radial-gradient(center, ellipse cover, transparent 38%, rgba(12,12,11,0.55) 100%);
+  background: radial-gradient(ellipse at center, transparent 38%, rgba(12,12,11,0.55) 100%);
+  pointer-events: none;
+}
 
-  .loading-logo {
-    font-family: var(--font-serif);
-    font-size: 2.5rem; font-weight: 400;
-    letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase;
-  }
-  .loading-bar-wrap {
-    width: 200px; height: 1px;
-    background: var(--subtle); position: relative; overflow: hidden;
-  }
-  .loading-bar {
-    position: absolute; top: 0; left: -100%;
-    width: 100%; height: 100%; background: var(--gold);
-    animation: load-sweep 1.4s ease-in-out infinite;
-  }
-  @keyframes load-sweep { 0% { left: -100%; } 100% { left: 100%; } }
+/* Taller gradient — portrait viewport has more vertical room */
+.slide-gradient {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 42%;
+  background: -webkit-linear-gradient(top, transparent 0%, rgba(12,12,11,0.72) 35%, rgba(12,12,11,0.98) 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(12,12,11,0.72) 35%, rgba(12,12,11,0.98) 100%);
+  pointer-events: none;
+}
 
-  #loading-label {
-    font-size: 0.65rem; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--muted);
-    text-align: center; max-width: 360px; line-height: 1.8;
-  }
-  #loading-label.error { color: #e07070; text-transform: none; font-size: 0.75rem; }
+/* ── DESCRIPTION — centered below image ── */
+.slide-desc {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 3vw 7vw 4.5vw;
+  text-align: center;
+  z-index: 10;
+}
 
-  #btn-retry {
-    display: none;
-    background: none; border: 1px solid var(--gold-dim);
-    color: var(--gold); padding: 0.65rem 1.75rem;
-    font-family: var(--font-sans); font-size: 0.7rem;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    cursor: pointer; transition: all 0.25s; margin-top: 0.5rem;
-  }
-  #btn-retry:hover { background: var(--gold-dim); }
+.desc-dept {
+  font-family: var(--sans); font-size: 0.95vw; letter-spacing: 0.38em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.9vw;
+  opacity: 0; -webkit-transform: translateY(1.2vw); transform: translateY(1.2vw);
+  -webkit-transition: opacity 0.6s 0.3s ease, -webkit-transform 0.6s 0.3s ease;
+  transition: opacity 0.6s 0.3s ease, transform 0.6s 0.3s ease;
+}
+.desc-title {
+  font-family: var(--serif); font-size: 4.5vw; font-weight: 400; line-height: 1.15;
+  color: var(--cream); margin-bottom: 0.7vw;
+  opacity: 0; -webkit-transform: translateY(1.5vw); transform: translateY(1.5vw);
+  -webkit-transition: opacity 0.65s 0.45s ease, -webkit-transform 0.65s 0.45s ease;
+  transition: opacity 0.65s 0.45s ease, transform 0.65s 0.45s ease;
+}
+.desc-artist {
+  font-family: var(--serif); font-style: italic; font-size: 2.2vw;
+  color: var(--gold); margin-bottom: 0.7vw;
+  opacity: 0; -webkit-transform: translateY(1vw); transform: translateY(1vw);
+  -webkit-transition: opacity 0.6s 0.55s ease, -webkit-transform 0.6s 0.55s ease;
+  transition: opacity 0.6s 0.55s ease, transform 0.6s 0.55s ease;
+}
+.desc-meta {
+  font-family: var(--sans); font-size: 1.2vw; letter-spacing: 0.12em;
+  color: var(--muted); margin-bottom: 1.2vw;
+  opacity: 0; -webkit-transform: translateY(0.8vw); transform: translateY(0.8vw);
+  -webkit-transition: opacity 0.6s 0.65s ease, -webkit-transform 0.6s 0.65s ease;
+  transition: opacity 0.6s 0.65s ease, transform 0.6s 0.65s ease;
+}
+.desc-text {
+  max-width: 82%;
+  margin: 0 auto;
+  font-family: var(--serif); font-size: 1.6vw; line-height: 1.72;
+  color: rgba(240,232,213,0.58);
+  opacity: 0; -webkit-transform: translateY(0.7vw); transform: translateY(0.7vw);
+  -webkit-transition: opacity 0.6s 0.75s ease, -webkit-transform 0.6s 0.75s ease;
+  transition: opacity 0.6s 0.75s ease, transform 0.6s 0.75s ease;
+}
 
-  /* ── DOTS ── */
-  #counter-badge {
-    position: fixed; top: 50%; right: 2rem;
-    transform: translateY(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    z-index: 20;
-  }
-  .counter-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: var(--subtle); transition: background 0.3s, transform 0.3s;
-    cursor: pointer;
-  }
-  .counter-dot.active { background: var(--gold); transform: scale(1.4); }
-  .counter-dot:hover { background: var(--gold-dim); }
+.slide.active .desc-dept, .slide.active .desc-title,
+.slide.active .desc-artist,.slide.active .desc-meta,
+.slide.active .desc-text {
+  opacity: 1; -webkit-transform: translateY(0); transform: translateY(0);
+}
 
-  /* ── FOOTER LINKS ── */
-  #next-hint {
-    position: fixed; bottom: 1.5rem; right: 2.5rem;
-    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--muted); display: flex; align-items: center; gap: 0.6rem;
-    cursor: pointer; transition: color 0.25s; z-index: 20;
-  }
-  #next-hint:hover { color: var(--gold); }
+/* ── PROGRESS BAR ── */
+#progress-bar {
+  position: fixed; bottom: 0; left: 0;
+  height: 0.35vh; width: 100%;
+  background: var(--gold);
+  -webkit-transform-origin: left center; transform-origin: left center;
+  -webkit-transform: scaleX(1); transform: scaleX(1);
+  z-index: 60;
+}
 
-  #cma-link {
-    position: fixed; bottom: 1.5rem; left: 2.5rem;
-    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none; z-index: 20;
-    transition: color 0.25s; display: none;
-  }
-  #cma-link:hover { color: var(--gold); }
+/* ── LOADING ── */
+#loading-screen {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 200;
+  background: var(--bg);
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-orient: vertical; -webkit-box-direction: normal;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  gap: 2.5vw;
+  -webkit-transition: opacity 0.8s ease; transition: opacity 0.8s ease;
+}
+#loading-screen.fade-out { opacity: 0; pointer-events: none; }
 
-  /* ── PAUSE OVERLAY ── */
-  #pause-overlay {
-    position: fixed; inset: 0; z-index: 30;
-    display: flex; align-items: center; justify-content: center;
-    pointer-events: none; opacity: 0; transition: opacity 0.3s;
-  }
-  #pause-overlay.visible { opacity: 1; }
-  .pause-icon {
-    width: 64px; height: 64px;
-    background: rgba(12,12,11,0.75); border: 1px solid var(--gold-dim);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
-  }
+.loading-logo {
+  font-family: var(--serif); font-size: 4.5vw; font-weight: 400;
+  letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; text-align: center;
+  line-height: 1.3;
+}
+.loading-logo span {
+  display: block; font-style: italic; font-size: 1.8vw;
+  letter-spacing: 0.1em; color: var(--muted); text-transform: none; margin-top: 0.6vw;
+}
+
+.loading-bar-outer {
+  width: 22vw; height: 1px; background: var(--subtle);
+  position: relative; overflow: hidden;
+}
+.loading-bar-inner {
+  position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: -webkit-linear-gradient(left, transparent, var(--gold), transparent);
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  -webkit-animation: sweep 1.5s ease-in-out infinite; animation: sweep 1.5s ease-in-out infinite;
+}
+@-webkit-keyframes sweep { 0%{left:-100%} 100%{left:100%} }
+@keyframes          sweep { 0%{left:-100%} 100%{left:100%} }
+
+#loading-msg {
+  font-family: var(--sans); font-size: 1.1vw; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--muted); text-align: center;
+  max-width: 60vw; line-height: 1.9;
+}
+#loading-msg.error { color: #d07060; text-transform: none; letter-spacing: 0.05em; }
+
+#btn-retry {
+  display: none; background: none; border: 1px solid var(--gold-dim); color: var(--gold);
+  padding: 1vw 3vw; font-family: var(--sans); font-size: 1.1vw;
+  letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+  -webkit-transition: all 0.25s; transition: all 0.25s;
+}
+#btn-retry:hover { background: var(--gold-dim); }
+
+/* ── DOTS ── */
+#dots {
+  position: fixed; top: 50%; right: 2vw;
+  -webkit-transform: translateY(-50%); transform: translateY(-50%);
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-orient: vertical; -webkit-box-direction: normal;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  gap: 1.2vw; z-index: 20;
+}
+.dot {
+  width: 0.7vw; height: 0.7vw;
+  -webkit-border-radius: 50%; border-radius: 50%;
+  background: var(--subtle); cursor: pointer;
+  -webkit-transition: background 0.3s, -webkit-transform 0.3s; transition: background 0.3s, transform 0.3s;
+}
+.dot.active { background: var(--gold); -webkit-transform: scale(1.5); transform: scale(1.5); }
+
+/* ── FOOTER LINKS ── */
+#next-btn {
+  position: fixed; bottom: 2vw; right: 3.5vw;
+  font-family: var(--sans); font-size: 1vw; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted); cursor: pointer; z-index: 20;
+  -webkit-transition: color 0.25s; transition: color 0.25s;
+}
+#next-btn:hover { color: var(--gold); }
+
+#cma-link {
+  position: fixed; bottom: 2vw; left: 3.5vw;
+  font-family: var(--sans); font-size: 1vw; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted); text-decoration: none; z-index: 20;
+  display: none; -webkit-transition: color 0.25s; transition: color 0.25s;
+}
+#cma-link:hover { color: var(--gold); }
+
+/* ── PAUSE ── */
+#pause-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 30;
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  pointer-events: none; opacity: 0; -webkit-transition: opacity 0.3s; transition: opacity 0.3s;
+}
+#pause-overlay.visible { opacity: 1; }
+.pause-icon {
+  width: 7vw; height: 7vw;
+  background: rgba(12,12,11,0.85); border: 1px solid var(--gold-dim);
+  -webkit-border-radius: 50%; border-radius: 50%;
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  font-size: 3vw;
+}
+
+/* ── SWITCHING ── */
+#switching-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;
+  background: var(--bg);
+  display: -webkit-box; display: -webkit-flex; display: flex;
+  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+  -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  -webkit-transition: opacity 0.4s ease; transition: opacity 0.4s ease;
+}
+#switching-overlay.visible { opacity: 1; pointer-events: all; }
+.switching-text {
+  font-family: var(--serif); font-style: italic; font-size: 2.5vw;
+  color: var(--gold); letter-spacing: 0.1em;
+}
 </style>
 </head>
 <body>
 
 <!-- LOADING -->
 <div id="loading-screen">
-  <div class="loading-logo">CMA</div>
-  <div class="loading-bar-wrap" id="loading-bar-wrap"><div class="loading-bar"></div></div>
-  <div id="loading-label">Opening the Collection…</div>
+  <div class="loading-logo">
+    CMA
+    <span>Cleveland Museum of Art &mdash; Open Collection</span>
+  </div>
+  <div class="loading-bar-outer"><div class="loading-bar-inner"></div></div>
+  <div id="loading-msg">Opening the Collection&hellip;</div>
   <button id="btn-retry" onclick="init()">Try Again</button>
 </div>
 
 <!-- HEADER -->
-<header>
-  <div class="logo">
-    Cleveland Museum of Art
-    <sub>Open Collection · Digital Gallery</sub>
-  </div>
-  <div class="header-right">
-    <div class="clock-wrap">
-      <svg class="clock-svg" viewBox="0 0 44 44">
-        <circle class="clock-track" cx="22" cy="22" r="19"/>
-        <circle class="clock-fill" id="clock-arc" cx="22" cy="22" r="19"/>
-      </svg>
-      <div class="clock-text" id="clock-label">2:00</div>
+<div id="header">
+  <div class="header-top">
+    <div class="logo">
+      Cleveland Museum of Art
+      <span class="logo-sub">Open Collection &middot; Digital Gallery</span>
     </div>
-    <button class="ctrl-btn" id="btn-pause" title="Pause (Space)" onclick="togglePause()">
-      <svg id="pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-        <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
-      </svg>
-    </button>
-    <button class="ctrl-btn" title="Next (→)" onclick="nextSlide()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="9 18 15 12 9 6"/>
-      </svg>
-    </button>
+    <div class="header-right">
+      <div class="clock-wrap">
+        <svg class="clock-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle class="clock-track" cx="50" cy="50" r="46"/>
+          <circle class="clock-fill"  id="clock-arc" cx="50" cy="50" r="46"/>
+        </svg>
+        <div class="clock-text" id="clock-label">2:00</div>
+      </div>
+      <button class="ctrl-btn" onclick="togglePause()" title="Pause">
+        <svg id="pause-icon" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+        </svg>
+      </button>
+      <button class="ctrl-btn" onclick="nextSlide()" title="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
   </div>
-</header>
+
+  <div id="filter-bar">
+    <span class="filter-label">Filter</span>
+    <button class="filter-chip active" data-dept=""                                 onclick="setFilter(this)">All</button>
+    <button class="filter-chip"        data-dept="Paintings"                        onclick="setFilter(this)">Paintings</button>
+    <button class="filter-chip"        data-dept="Drawings"                         onclick="setFilter(this)">Drawings</button>
+    <button class="filter-chip"        data-dept="Prints"                           onclick="setFilter(this)">Prints</button>
+    <button class="filter-chip"        data-dept="Decorative Art and Design"        onclick="setFilter(this)">Decorative Arts</button>
+    <button class="filter-chip"        data-dept="Photographs"                      onclick="setFilter(this)">Photography</button>
+    <button class="filter-chip"        data-dept="Textiles"                         onclick="setFilter(this)">Textiles</button>
+    <button class="filter-chip"        data-dept="Egyptian and Ancient Near Eastern Art" onclick="setFilter(this)">Ancient</button>
+  </div>
+</div>
 
 <!-- STAGE -->
 <div id="stage"></div>
-
-<!-- PROGRESS BAR -->
 <div id="progress-bar"></div>
-
-<!-- DOTS -->
-<div id="counter-badge"></div>
-
-<div id="next-hint" onclick="nextSlide()">
-  Next Work
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <polyline points="9 18 15 12 9 6"/>
-  </svg>
-</div>
-<a id="cma-link" href="#" target="_blank">View on CMA ↗</a>
-
-<div id="pause-overlay"><div class="pause-icon">⏸</div></div>
+<div id="dots"></div>
+<div id="next-btn" onclick="nextSlide()">Next Work &rsaquo;</div>
+<a id="cma-link" href="#" target="_blank">View on CMA &rarr;</a>
+<div id="pause-overlay"><div class="pause-icon">&#9646;&#9646;</div></div>
+<div id="switching-overlay"><div class="switching-text">Changing collection&hellip;</div></div>
 
 <script>
 // ─────────────────────────────────────────────────────────────
-// Config
+// Config — edit DURATION here (seconds)
 // ─────────────────────────────────────────────────────────────
-const DURATION = 30;   // seconds per slide
-const CIRC     = 2 * Math.PI * 19;  // SVG circumference for r=19
-const API      = 'https://openaccess-api.clevelandart.org/api/artworks/';
+var DURATION = 120;
+var API      = 'https://openaccess-api.clevelandart.org/api/artworks/';
+
+// SVG clock: viewBox 0 0 100 100, r=46
+// circumference = 2π × 46 ≈ 289.0
+var CIRC = 2 * Math.PI * 46;
 
 // ─────────────────────────────────────────────────────────────
 // State
 // ─────────────────────────────────────────────────────────────
-let slides      = [];
-let currentIdx  = -1;
-let isPaused    = false;
-let secondsLeft = DURATION;
-let timerID     = null;
+var slides      = [];
+var currentIdx  = -1;
+var isPaused    = false;
+var secondsLeft = DURATION;
+var timerID     = null;
+var preloading  = false;
+var activeDept  = '';
 
 // ─────────────────────────────────────────────────────────────
-// Network helpers
+// Utilities
 // ─────────────────────────────────────────────────────────────
-function fetchWithTimeout(url, ms) {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), ms);
-  return fetch(url, { signal: ctrl.signal }).finally(() => clearTimeout(timer));
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function padTwo(n) { return n < 10 ? '0' + n : '' + n; }
+
+function xhrGet(url, ms) {
+  return new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.timeout = ms || 14000;
+    xhr.ontimeout = function() { reject(new Error('timeout')); };
+    xhr.onerror   = function() { reject(new Error('network error')); };
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try { resolve(JSON.parse(xhr.responseText)); }
+        catch(e) { reject(new Error('parse error')); }
+      } else {
+        reject(new Error('HTTP ' + xhr.status));
+      }
+    };
+    xhr.send();
+  });
 }
 
 function preloadImg(src) {
-  return new Promise(resolve => {
-    const i = new Image();
-    i.onload  = () => resolve(true);
-    i.onerror = () => resolve(false);
-    setTimeout(() => resolve(false), 10000);
-    i.src = src;
+  return new Promise(function(resolve) {
+    var done = false;
+    var t = setTimeout(function() { if (!done) { done=true; resolve(false); } }, 12000);
+    var img = new Image();
+    img.onload  = function() { if (!done) { done=true; clearTimeout(t); resolve(true); } };
+    img.onerror = function() { if (!done) { done=true; clearTimeout(t); resolve(false); } };
+    img.src = src;
   });
 }
 
 function bestImage(work) {
-  const im = work && work.images;
+  var im = work && work.images;
   if (!im) return null;
-  return (im.web && im.web.url) || (im.full && im.full.url) || (im.thumb && im.thumb.url) || null;
+  if (im.full  && im.full.url)  return im.full.url;
+  if (im.web   && im.web.url)   return im.web.url;
+  if (im.thumb && im.thumb.url) return im.thumb.url;
+  return null;
 }
 
 function getArtist(work) {
   if (!work.creators || !work.creators.length) return work.culture || '';
-  return work.creators.map(function(c){ return c.description || c.name || ''; }).filter(Boolean).join(', ');
-}
-
-function esc(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ─────────────────────────────────────────────────────────────
-// Fetch a random work that has a loadable image
-// ─────────────────────────────────────────────────────────────
-async function fetchRandomWork() {
-  for (var attempt = 0; attempt < 8; attempt++) {
-    try {
-      var skip = Math.floor(Math.random() * 48000);
-      var url  = API + '?has_image=1&limit=1&skip=' + skip;
-      var resp = await fetchWithTimeout(url, 12000);
-      if (!resp.ok) continue;
-      var data = await resp.json();
-      var work = data.data && data.data[0];
-      if (!work) continue;
-      var imgUrl = bestImage(work);
-      if (!imgUrl) continue;
-      var ok = await preloadImg(imgUrl);
-      if (!ok) continue;
-      return { work: work, imgUrl: imgUrl };
-    } catch(e) {
-      // timeout or network error — try again
-    }
+  var names = [];
+  for (var i = 0; i < work.creators.length; i++) {
+    var n = work.creators[i].description || work.creators[i].name || '';
+    if (n) names.push(n);
   }
-  throw new Error('Could not load a work after 8 attempts');
+  return names.join(', ');
 }
 
 // ─────────────────────────────────────────────────────────────
-// Build a slide DOM node
+// Fetch random work
+// ─────────────────────────────────────────────────────────────
+function fetchRandomWork(attempt) {
+  attempt = attempt || 0;
+  if (attempt >= 8) return Promise.reject(new Error('8 attempts failed'));
+
+  var skip = Math.floor(Math.random() * 48000);
+  var url  = API + '?has_image=1&limit=1&skip=' + skip;
+  if (activeDept) url += '&department=' + encodeURIComponent(activeDept);
+
+  return xhrGet(url)
+    .then(function(data) {
+      var work = data.data && data.data[0];
+      if (!work) return fetchRandomWork(attempt + 1);
+      var imgUrl = bestImage(work);
+      if (!imgUrl) return fetchRandomWork(attempt + 1);
+      return preloadImg(imgUrl).then(function(ok) {
+        if (!ok) return fetchRandomWork(attempt + 1);
+        return { work: work, imgUrl: imgUrl };
+      });
+    })
+    .catch(function() { return fetchRandomWork(attempt + 1); });
+}
+
+// ─────────────────────────────────────────────────────────────
+// Build slide
 // ─────────────────────────────────────────────────────────────
 function buildSlide(data) {
   var work   = data.work;
   var imgUrl = data.imgUrl;
   var artist = getArtist(work);
-  var meta   = [work.creation_date, work.culture, work.technique].filter(Boolean).join(' · ');
-  var raw    = (work.tombstone || work.description || '').replace(/<[^>]*>/g, '').trim();
-  var desc   = raw.length > 300 ? raw.slice(0, 297) + '…' : raw;
-  var cmaUrl = work.url || ('https://www.clevelandart.org/art/' + work.accession_number);
+  var parts  = [];
+  if (work.creation_date) parts.push(work.creation_date);
+  if (work.culture)       parts.push(work.culture);
+  if (work.technique)     parts.push(work.technique);
+  var meta = parts.join(' \u00B7 ');
+  var raw  = (work.tombstone || work.description || '').replace(/<[^>]*>/g,'').trim();
+  var desc = raw.length > 320 ? raw.slice(0,317) + '\u2026' : raw;
+  var cmaUrl = work.url || ('https://www.clevelandart.org/art/' + (work.accession_number || ''));
 
   var el = document.createElement('div');
   el.className   = 'slide';
   el.dataset.url = cmaUrl;
-  el.innerHTML   =
-    '<div class="slide-img-wrap"><img src="' + esc(imgUrl) + '" alt="' + esc(work.title||'') + '" draggable="false"/></div>' +
-    '<div class="slide-vignette"></div>' +
-    '<div class="slide-gradient"></div>' +
-    '<div class="slide-desc">' +
-      (work.department ? '<div class="desc-dept">' + esc(work.department) + '</div>' : '') +
-      '<div class="desc-title">'  + esc(work.title || 'Untitled') + '</div>' +
-      (artist ? '<div class="desc-artist">' + esc(artist) + '</div>' : '') +
-      (meta   ? '<div class="desc-meta">'   + esc(meta)   + '</div>' : '') +
-      (desc   ? '<div class="desc-text">'   + esc(desc)   + '</div>' : '') +
-    '</div>';
+
+  var html = '<div class="slide-img-wrap"><img src="' + esc(imgUrl) + '" alt="' + esc(work.title||'') + '"></div>'
+           + '<div class="slide-vignette"></div>'
+           + '<div class="slide-gradient"></div>'
+           + '<div class="slide-desc">';
+  if (work.department) html += '<div class="desc-dept">'   + esc(work.department)         + '</div>';
+  html +=                      '<div class="desc-title">'  + esc(work.title || 'Untitled') + '</div>';
+  if (artist) html +=          '<div class="desc-artist">' + esc(artist)                  + '</div>';
+  if (meta)   html +=          '<div class="desc-meta">'   + esc(meta)                    + '</div>';
+  if (desc)   html +=          '<div class="desc-text">'   + esc(desc)                    + '</div>';
+  html += '</div>';
+  el.innerHTML = html;
   return el;
 }
 
 // ─────────────────────────────────────────────────────────────
-// Show a slide by index
+// Show slide
 // ─────────────────────────────────────────────────────────────
 function showSlide(idx) {
-  slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+  for (var i = 0; i < slides.length; i++) slides[i].classList.toggle('active', i === idx);
   currentIdx = idx;
   updateDots();
-
-  var link = document.getElementById('cma-link');
-  var url  = slides[idx] && slides[idx].dataset.url;
-  if (url) { link.href = url; link.style.display = 'block'; }
-
   resetClock();
+  var sl   = slides[idx];
+  var link = document.getElementById('cma-link');
+  if (sl && sl.dataset.url) { link.href = sl.dataset.url; link.style.display = 'block'; }
   preloadAhead();
 }
 
 // ─────────────────────────────────────────────────────────────
-// Silently preload 2 slides ahead
+// Preload 2 ahead
 // ─────────────────────────────────────────────────────────────
-var preloading = false;
-async function preloadAhead() {
+function preloadAhead() {
   if (preloading) return;
   preloading = true;
-  while (slides.length <= currentIdx + 2) {
-    try {
-      var data  = await fetchRandomWork();
-      var slide = buildSlide(data);
-      slides.push(slide);
-      document.getElementById('stage').appendChild(slide);
-      updateDots();
-    } catch(e) {
-      await new Promise(function(r){ setTimeout(r, 2000); });
-    }
+  var cap = activeDept;
+  function loop() {
+    if (cap !== activeDept)          { preloading = false; return; }
+    if (slides.length > currentIdx + 2) { preloading = false; return; }
+    fetchRandomWork()
+      .then(function(data) {
+        if (cap !== activeDept) { preloading = false; return; }
+        var s = buildSlide(data);
+        slides.push(s);
+        document.getElementById('stage').appendChild(s);
+        updateDots();
+        loop();
+      })
+      .catch(function() { setTimeout(loop, 2500); });
   }
-  preloading = false;
+  loop();
 }
 
 // ─────────────────────────────────────────────────────────────
 // Next slide
 // ─────────────────────────────────────────────────────────────
-async function nextSlide() {
+function nextSlide() {
   var next = currentIdx + 1;
-  if (next < slides.length) {
-    showSlide(next);
-    return;
-  }
-  // not yet loaded — fetch on demand
-  try {
-    var data  = await fetchRandomWork();
-    var slide = buildSlide(data);
-    slides.push(slide);
-    document.getElementById('stage').appendChild(slide);
-    showSlide(slides.length - 1);
-  } catch(e) {
-    console.error('nextSlide fetch failed', e);
-  }
+  if (next < slides.length) { showSlide(next); return; }
+  fetchRandomWork()
+    .then(function(data) {
+      var s = buildSlide(data);
+      slides.push(s);
+      document.getElementById('stage').appendChild(s);
+      showSlide(slides.length - 1);
+    })
+    .catch(function(e) { console.error('nextSlide failed', e); });
 }
 
 // ─────────────────────────────────────────────────────────────
-// Clock & progress bar
+// Filter
+// ─────────────────────────────────────────────────────────────
+function setFilter(el) {
+  var newDept = el.getAttribute('data-dept');
+  if (newDept === activeDept) return;
+  var chips = document.querySelectorAll('.filter-chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.remove('active');
+  el.classList.add('active');
+  activeDept = newDept;
+
+  var ov = document.getElementById('switching-overlay');
+  ov.classList.add('visible');
+  preloading = false;
+  for (var j = 0; j < slides.length; j++) slides[j].remove();
+  slides = []; currentIdx = -1;
+  clearInterval(timerID);
+
+  fetchRandomWork()
+    .then(function(f) {
+      return fetchRandomWork().then(function(s) { return { first:f, second:s }; });
+    })
+    .then(function(b) {
+      var stage = document.getElementById('stage');
+      var s1 = buildSlide(b.first);
+      var s2 = buildSlide(b.second);
+      slides.push(s1, s2);
+      stage.appendChild(s1); stage.appendChild(s2);
+      ov.classList.remove('visible');
+      showSlide(0); startTimer();
+    })
+    .catch(function() { ov.classList.remove('visible'); });
+}
+
+// ─────────────────────────────────────────────────────────────
+// Clock
 // ─────────────────────────────────────────────────────────────
 function resetClock() {
   secondsLeft = DURATION;
   renderClock();
 }
-
 function renderClock() {
   var frac   = secondsLeft / DURATION;
   var offset = CIRC * (1 - frac);
   document.getElementById('clock-arc').style.strokeDashoffset = offset;
   var m = Math.floor(secondsLeft / 60);
   var s = secondsLeft % 60;
-  document.getElementById('clock-label').textContent = m + ':' + (s < 10 ? '0' : '') + s;
-
+  document.getElementById('clock-label').textContent = m + ':' + padTwo(s);
   var bar = document.getElementById('progress-bar');
-  bar.style.transition = 'none';
-  bar.style.transform  = 'scaleX(' + frac + ')';
-  requestAnimationFrame(function(){
-    bar.style.transition = 'transform 1s linear';
-  });
+  bar.style.WebkitTransition = 'none'; bar.style.transition = 'none';
+  bar.style.WebkitTransform  = 'scaleX(' + frac + ')'; bar.style.transform = 'scaleX(' + frac + ')';
 }
-
 function startTimer() {
   clearInterval(timerID);
   timerID = setInterval(function() {
@@ -515,14 +701,16 @@ function startTimer() {
     document.getElementById('clock-arc').style.strokeDashoffset = offset;
     var m = Math.floor(secondsLeft / 60);
     var s = secondsLeft % 60;
-    document.getElementById('clock-label').textContent = m + ':' + (s < 10 ? '0' : '') + s;
-    document.getElementById('progress-bar').style.transform = 'scaleX(' + frac + ')';
+    document.getElementById('clock-label').textContent = m + ':' + padTwo(s);
+    var bar = document.getElementById('progress-bar');
+    bar.style.WebkitTransition = 'transform 1s linear'; bar.style.transition = 'transform 1s linear';
+    bar.style.WebkitTransform  = 'scaleX(' + frac + ')'; bar.style.transform = 'scaleX(' + frac + ')';
     if (secondsLeft === 0) nextSlide();
   }, 1000);
 }
 
 // ─────────────────────────────────────────────────────────────
-// Pause / resume
+// Pause
 // ─────────────────────────────────────────────────────────────
 function togglePause() {
   isPaused = !isPaused;
@@ -536,15 +724,15 @@ function togglePause() {
 // Dots
 // ─────────────────────────────────────────────────────────────
 function updateDots() {
-  var badge   = document.getElementById('counter-badge');
+  var badge   = document.getElementById('dots');
   var total   = slides.length;
   var visible = Math.min(total, 8);
   var start   = Math.max(0, currentIdx - Math.floor(visible / 2));
   badge.innerHTML = '';
   for (var i = start; i < Math.min(start + visible, total); i++) {
     var dot = document.createElement('div');
-    dot.className = 'counter-dot' + (i === currentIdx ? ' active' : '');
-    (function(idx){ dot.addEventListener('click', function(){ if (idx < slides.length) showSlide(idx); }); })(i);
+    dot.className = 'dot' + (i === currentIdx ? ' active' : '');
+    (function(idx) { dot.onclick = function() { if (idx < slides.length) showSlide(idx); }; })(i);
     badge.appendChild(dot);
   }
 }
@@ -553,75 +741,65 @@ function updateDots() {
 // Keyboard
 // ─────────────────────────────────────────────────────────────
 document.addEventListener('keydown', function(e) {
-  if (e.code === 'Space')      { e.preventDefault(); togglePause(); }
-  if (e.code === 'ArrowRight') nextSlide();
+  if (e.keyCode === 32) { e.preventDefault(); togglePause(); }
+  if (e.keyCode === 39) nextSlide();
 });
 
 // ─────────────────────────────────────────────────────────────
-// Loading UI helpers
+// Loading helpers
 // ─────────────────────────────────────────────────────────────
-function setLoadingMsg(msg) {
-  document.getElementById('loading-label').textContent = msg;
-  document.getElementById('loading-label').classList.remove('error');
+function setMsg(msg) {
+  var el = document.getElementById('loading-msg');
+  el.textContent = msg; el.className = '';
 }
-
 function showError(msg) {
-  document.getElementById('loading-label').textContent = msg;
-  document.getElementById('loading-label').classList.add('error');
-  document.getElementById('loading-bar-wrap').style.display = 'none';
+  var el = document.getElementById('loading-msg');
+  el.textContent = msg; el.className = 'error';
   document.getElementById('btn-retry').style.display = 'block';
 }
-
 function hideLoader() {
   var el = document.getElementById('loading-screen');
   el.classList.add('fade-out');
-  setTimeout(function(){ el.style.display = 'none'; }, 900);
+  setTimeout(function() { el.style.display = 'none'; }, 900);
 }
 
 // ─────────────────────────────────────────────────────────────
 // Init
 // ─────────────────────────────────────────────────────────────
-async function init() {
-  // Reset UI
+function init() {
   var loader = document.getElementById('loading-screen');
-  loader.style.display  = 'flex';
-  loader.style.opacity  = '1';
+  loader.style.display = 'flex'; loader.style.opacity = '1';
   loader.classList.remove('fade-out');
-  document.getElementById('loading-bar-wrap').style.display = 'block';
   document.getElementById('btn-retry').style.display = 'none';
-  setLoadingMsg('Opening the Collection…');
+  setMsg('Opening the Collection\u2026');
 
-  // Clear old slides
-  slides.forEach(function(s){ s.remove(); });
+  for (var i = 0; i < slides.length; i++) slides[i].remove();
   slides = []; currentIdx = -1; isPaused = false;
-  clearInterval(timerID);
+  clearInterval(timerID); preloading = false;
 
-  try {
-    setLoadingMsg('Fetching artwork 1 of 2…');
-    var first = await fetchRandomWork();
+  setMsg('Fetching artwork 1 of 2\u2026');
 
-    setLoadingMsg('Fetching artwork 2 of 2…');
-    var second = await fetchRandomWork();
-
-    var stage = document.getElementById('stage');
-    var s1 = buildSlide(first);
-    var s2 = buildSlide(second);
-    slides.push(s1, s2);
-    stage.appendChild(s1);
-    stage.appendChild(s2);
-
-    hideLoader();
-    showSlide(0);
-    startTimer();
-
-  } catch(err) {
-    console.error('Init error:', err);
-    showError(
-      'Could not load artworks from the CMA API.\n' +
-      'Please save this file and open it directly in your browser (not via Claude preview).\n' +
-      'Then click Try Again.'
-    );
-  }
+  fetchRandomWork()
+    .then(function(first) {
+      setMsg('Fetching artwork 2 of 2\u2026');
+      return fetchRandomWork().then(function(second) {
+        return { first: first, second: second };
+      });
+    })
+    .then(function(both) {
+      var stage = document.getElementById('stage');
+      var s1 = buildSlide(both.first);
+      var s2 = buildSlide(both.second);
+      slides.push(s1, s2);
+      stage.appendChild(s1); stage.appendChild(s2);
+      hideLoader();
+      showSlide(0);
+      startTimer();
+    })
+    .catch(function(err) {
+      console.error('Init error:', err);
+      showError('Could not connect to the CMA API. Check network access to openaccess-api.clevelandart.org');
+    });
 }
 
 init();
