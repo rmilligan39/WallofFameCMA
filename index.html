@@ -90,7 +90,7 @@ html, body {
 .clock-track { fill: none; stroke: var(--subtle); stroke-width: 2; }
 .clock-fill {
   fill: none; stroke: var(--gold); stroke-width: 2; stroke-linecap: round;
-  stroke-dasharray: 100; /* normalised — JS uses 0–100 offset */
+  stroke-dasharray: 289; /* 2π × 46 — matches CIRC in JS */
   stroke-dashoffset: 0;
   -webkit-transition: stroke-dashoffset 1s linear; transition: stroke-dashoffset 1s linear;
 }
@@ -510,7 +510,6 @@ function preloadImg(src) {
 function bestImage(work) {
   var im = work && work.images;
   if (!im) return null;
-  if (im.full  && im.full.url)  return im.full.url;
   if (im.web   && im.web.url)   return im.web.url;
   if (im.thumb && im.thumb.url) return im.thumb.url;
   return null;
